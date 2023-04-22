@@ -62,7 +62,7 @@ public class EmpController {
 
 
     /**
-     *批量添加
+     *批量添加，
      */
 @PostMapping("/insertEmps")
 public void InsertEmps(@RequestBody List<Emp> emps) {

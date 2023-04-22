@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.itheima.dao.EmpDao">
 
-    <!--    结果映射-->
+    <!--    结果映射1111-->
     <resultMap id="empResultMap" type="com.itheima.pojo.Emp">
         <result column="job_id" property="jobId"/>
         <result column="dept_id" property="deptId"/>
