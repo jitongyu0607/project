@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.itheima.dao.EmpDao">
+
+    <!--    结果映射-->
+    <resultMap id="empResultMap" type="com.itheima.pojo.Emp">
+        <result column="job_id" property="jobId"/>
+        <result column="dept_id" property="deptId"/>
+    </resultMap>
+
+    <!--插入一條數據-->
+    <insert id="InsertOne" parameterType="com.itheima.pojo.Emp">
+        insert into emp(ename, job_id, mgr, joindate, salary, bonus, dept_id, updatedate) value
+            (#{ename},#{jobId},#{mgr},#{joindate},#{salary},#{bonus},#{deptId},#{updatedate})
+    </insert>
+
+
+    <!--批量插入數據-->
+    <insert id="InsertEmps" parameterType="com.itheima.pojo.Emp">
+        insert into emp(ename, job_id, mgr, joindate, salary, bonus, dept_id,updatedate) values
+        <foreach collection="list" item="emp" separator=",">
+            (#{emp.ename},#{emp.jobId},#{emp.mgr},#{emp.joindate},#{emp.salary},#{emp.bonus},#{emp.deptId},#{emp.updatedate})
+        </foreach>
+    </insert>
+
+
+    <!--刪除一條數據-->
+    <delete id="deleteById">
+        delete
+        from emp
+        where id = #{id}
+    </delete>
+
+
+    <!--根據id刪除一條或者多條數據-->
+    <delete id="deleteByIds">
+        delete from emp where id in
+        <foreach collection="list" item="id" separator="," open="(" close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+
+    <!--查詢所有數據-->
+    <select id="selectAll" resultType="com.itheima.pojo.Emp" resultMap="empResultMap">
+        select *
+        from emp;
+    </select>
+
+    <!--根據id查詢數據-->
+    <select id="selectById" resultType="com.itheima.pojo.Emp" resultMap="empResultMap">
+        select *
+        from emp
+        where id = #{id}
+    </select>
+
+    <!--查詢數總記錄數-->
+    <select id="selectCount" resultType="java.lang.Integer">
+        select count(*)
+        from emp
+    </select>
+
+    <!--分頁查詢-->
+    <select id="selectByPage" resultType="com.itheima.pojo.Emp">
+        select *
+        from emp limit #{currentPage},#{pageSize}
+    </select>
+
+
+    <!--更新一條數據-->
+    <update id="updateById" parameterType="com.itheima.pojo.Emp">
+        update emp
+        <set>
+            <if test="ename!=null">
+                ename=#{ename},
+            </if>
+            <if test="jobId!=null">
+                job_id=#{jobId},
+            </if>
+            <if test="mgr!=null">
+                mgr=#{mgr},
+            </if>
+            <if test="joindate!=null">
+                joindate=#{joindate},
+            </if>
+            <if test="salary!=null">
+                salary=#{salary},
+            </if>
+            <if test="bonus!=null">
+                bonus=#{bonus},
+            </if>
+            <if test="deptId!=null">
+                dept_id=#{deptId},
+            </if>
+            <if test="updatedate!=null">
+                updatedate=#{updatedate}
+            </if>
+        </set>
+        where id=#{id};
+
+    </update>
+
+
+    <!--批量更新數據-->
+    <update id="updateByIds" parameterType="com.itheima.pojo.Emp">
+        <foreach collection="list" item="emp" separator=";">
+
+            update emp
+            <trim suffixOverrides=",">
+                <set>
+                    <if test="emp.ename!=null">ename=#{emp.ename},</if>
+                    <if test="emp.jobId!=null">job_id=#{emp.jobId},</if>
+                    <if test="emp.mgr!=null">mgr=#{emp.mgr},</if>
+                    <if test="emp.joindate!=null">joindate=#{emp.joindate},</if>
+                    <if test="emp.salary!=null">salary=#{emp.salary},</if>
+                    <if test="emp.bonus!=null">bonus=#{emp.bonus},</if>
+                    <if test="emp.deptId!=null">dept_id=#{emp.deptId},</if>
+                    <if test="emp.updatedate!=null">updatedate=#{emp.updatedate},</if>
+                </set>
+
+            </trim>
+            where id=#{emp.id}
+        </foreach>
+    </update>
+
+
+    <!--模糊查詢-->
+    <select id="fuzzySelect" resultType="com.itheima.pojo.Emp"
+            parameterType="com.itheima.pojo.Emp" resultMap="empResultMap">
+                select  * from emp
+        where
+                    1=1
+            <if test="ename!=null">
+                and ename like '%${ename}%'
+            </if>
+            <if test="jobId!=null and jobId!='' " >
+                and  job_id=#{jobId}
+            </if>
+            <if test="mgr!=null and mgr!='' ">
+                and  mgr=#{mgr}
+            </if>
+            <if test="joindate!=null and joindate!='' ">
+                and  joindate=#{joindate}
+            </if>
+            <if test="salary!=null  and salary!='' ">
+                and   salary=#{salary}
+            </if>
+            <if test="bonus!=null  and bonus!='' ">
+                and  bonus=#{bonus}
+            </if>
+            <if test="deptId!=null  and deptId!='' ">
+                and   dept_id=#{deptId}
+            </if>
+            <if test="updatedate!=null  and updatedate!='' ">
+                and  updatedate=#{updatedate}
+            </if>
+    </select>
+
+</mapper>
