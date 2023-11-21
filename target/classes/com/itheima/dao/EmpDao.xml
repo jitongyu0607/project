@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.itheima.dao.EmpDao">
 
-    <!--    结果映射-->
+    <!--    结果映射1111-->
     <resultMap id="empResultMap" type="com.itheima.pojo.Emp">
         <result column="job_id" property="jobId"/>
         <result column="dept_id" property="deptId"/>
@@ -129,35 +129,6 @@
     <!--模糊查詢-->
     <select id="fuzzySelect" resultType="com.itheima.pojo.Emp"
             parameterType="com.itheima.pojo.Emp" resultMap="empResultMap">
-<!--        select * from emp where 1=1-->
-<!--        <choose>-->
-<!--            <when test="ename!=null and ename!=''">-->
-<!--                and ename like '%${ename}%'-->
-<!--            </when>-->
-<!--            <when test="jobId!=null and jobId!=0">-->
-<!--                and job_id=#{jobId}-->
-<!--            </when>-->
-<!--            <when test="mgr!=null">-->
-<!--                and mgr=#{mgr}-->
-<!--            </when>-->
-<!--            <when test="joindate!=null">-->
-<!--                and joindate=#{joindate}-->
-<!--            </when>-->
-<!--            <when test="salary!=null">-->
-<!--                and salary=#{salary}-->
-<!--            </when>-->
-<!--            <when test="bonus!=null">-->
-<!--                and bonus=#{bonus}-->
-<!--            </when>-->
-<!--            <when test="deptId!=null">-->
-<!--                and dept_id=#{deptId}-->
-<!--            </when>-->
-<!--            <when test="updatedate!=null">-->
-<!--                and updatedate=#{updatedate}-->
-<!--            </when>-->
-
-<!--        </choose>-->
-
                 select  * from emp
         where
                     1=1
